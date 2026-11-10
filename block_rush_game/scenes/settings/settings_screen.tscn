@@ -1,0 +1,119 @@
+[gd_scene load_steps=2 format=3 uid="uid://settings_screen"]
+
+[ext_resource type="Script" path="res://scripts/ui/settings_screen.gd" id="1_set"]
+
+[node name="SettingsScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_set")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.055, 0.086, 0.169, 1)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_right = -24.0
+offset_top = 60.0
+offset_bottom = -40.0
+
+[node name="TitleLabel" type="Label" parent="VBox"]
+layout_mode = 2
+text = "SETTINGS"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="Spacer" type="Control" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 32)
+
+[node name="SoundRow" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+
+[node name="SoundLabel" type="Label" parent="VBox/SoundRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "🔊  Sound Effects"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="SoundToggle" type="CheckButton" parent="VBox/SoundRow"]
+layout_mode = 2
+
+[node name="MusicRow" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+
+[node name="MusicLabel" type="Label" parent="VBox/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "🎵  Music"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="MusicToggle" type="CheckButton" parent="VBox/MusicRow"]
+layout_mode = 2
+
+[node name="HapticsRow" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+
+[node name="HapticsLabel" type="Label" parent="VBox/HapticsRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "📳  Haptic Feedback"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="HapticsToggle" type="CheckButton" parent="VBox/HapticsRow"]
+layout_mode = 2
+
+[node name="ReducedMotionRow" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+
+[node name="ReducedLabel" type="Label" parent="VBox/ReducedMotionRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "✦  Reduced Motion"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="ReducedToggle" type="CheckButton" parent="VBox/ReducedMotionRow"]
+layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 24)
+
+[node name="PrivacyButton" type="Button" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "Privacy Policy"
+theme_override_font_sizes/font_size = 16
+
+[node name="Spacer3" type="Control" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+text = "← BACK"
+theme_override_font_sizes/font_size = 20
+

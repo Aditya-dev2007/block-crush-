@@ -1,0 +1,21 @@
+# Godot 4+ cache and imported files
+.godot/
+*.translation
+
+# Mono / .NET
+.mono/
+data_*/
+mono_crash.*.json
+
+# Builds & exports
+build/
+bin/
+*.apk
+*.aab
+*.zip
+
+# OS & Temp
+.DS_Store
+Thumbs.db
+*.tmp
+
