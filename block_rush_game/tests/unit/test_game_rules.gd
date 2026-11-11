@@ -16,8 +16,7 @@ func _ready() -> void:
 		print("✅ ALL TESTS PASSED")
 	else:
 		print("❌ SOME TESTS FAILED — see above")
-	if DisplayServer.get_name() == "headless":
-		get_tree().quit(0 if _fail_count == 0 else 1)
+	get_tree().quit(0 if _fail_count == 0 else 1)
 
 func _run_all_tests() -> void:
 	_test_board_in_bounds()
