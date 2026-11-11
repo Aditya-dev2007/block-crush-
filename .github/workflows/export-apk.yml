@@ -48,6 +48,8 @@ jobs:
           else
             mv /tmp/tpz_extracted/* ~/.local/share/godot/export_templates/4.7.stable/
           fi
+          mkdir -p ~/.local/share/godot/templates
+          cp -r ~/.local/share/godot/export_templates/4.7.stable ~/.local/share/godot/templates/4.7.stable
           ls -la ~/.local/share/godot/export_templates/4.7.stable/
 
       - name: Generate Debug Keystore
@@ -70,7 +72,6 @@ jobs:
               f'export/android/android_sdk_path = \"{sdk}\"',
               f'export/android/java_sdk_path = \"{java}\"',
               f'export/android/debug_keystore = \"{home}/debug.keystore\"',
-              'export/android/debug_keystore_user = \"androiddebugkey\"',
               'export/android/debug_keystore_pass = \"android\"',
               'export/android/force_system_user = false',
           ]
@@ -79,13 +80,36 @@ jobs:
               f.write('\n'.join(lines) + '\n')
           "
           cp ~/.config/godot/editor_settings-4.tres ~/.config/godot/editor_settings-4.7.tres
+          cp ~/.config/godot/editor_settings-4.tres ~/.config/godot/editor_settings-4.4.tres
           cat ~/.config/godot/editor_settings-4.tres
 
       - name: Export Android APK
         run: |
-          mkdir -p block_rush_game/build
-          godot -v --headless --path block_rush_game --export-debug "Android" "$(pwd)/block_rush_game/build/BLOCK_RUSH.apk"
+          LATEST_BUILD_TOOLS=$(ls -d $ANDROID_HOME/build-tools/* | tail -n 1)
+          export PATH="$LATEST_BUILD_TOOLS:$ANDROID_HOME/platform-tools:$PATH"
+          echo "Using Android Build Tools: $LATEST_BUILD_TOOLS"
+          echo "apksigner located at: $(which apksigner || true)"
+          echo "zipalign located at: $(which zipalign || true)"
+          cd block_rush_game
+          mkdir -p build
+          godot -v --headless --export-debug "Android" build/BLOCK_RUSH.apk 2>&1 | tee ../export.log || EXPORT_CODE=$?
+          cd ..
+          echo "### 📋 Godot Export Output" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          tail -n 100 export.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          if [ -n "$EXPORT_CODE" ] || [ ! -f block_rush_game/build/BLOCK_RUSH.apk ]; then
+            echo "::error::Godot Android export failed!"
+            exit 1
+          fi
           ls -lh block_rush_game/build/BLOCK_RUSH.apk
+
+      - name: Upload Export Log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: export-log
+          path: export.log
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
