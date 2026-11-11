@@ -1,0 +1,75 @@
+name: Deploy to GitHub Pages (Mobile Web & QR Play)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Godot 4.7
+        run: |
+          curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          sudo mv Godot_v4.7-stable_linux.x86_64 /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+          godot --version
+
+      - name: Install Godot 4.7 Export Templates
+        run: |
+          curl -L -o templates.tpz https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_export_templates.tpz
+          mkdir -p /tmp/tpz_extracted
+          unzip -q templates.tpz -d /tmp/tpz_extracted
+          mkdir -p ~/.local/share/godot/export_templates/4.7.stable
+          if [ -d /tmp/tpz_extracted/templates ]; then
+            mv /tmp/tpz_extracted/templates/* ~/.local/share/godot/export_templates/4.7.stable/
+          else
+            mv /tmp/tpz_extracted/* ~/.local/share/godot/export_templates/4.7.stable/
+          fi
+          mkdir -p ~/.local/share/godot/templates
+          cp -r ~/.local/share/godot/export_templates/4.7.stable ~/.local/share/godot/templates/4.7.stable
+
+      - name: Export Godot Web (HTML5)
+        run: |
+          cd block_rush_game
+          mkdir -p build/web
+          godot -v --headless --export-release "Web" build/web/index.html
+          ls -lh build/web
+
+      - name: Post-process Web Build
+        run: |
+          cd block_rush_game/build/web
+          touch .nojekyll
+          # Download coi-serviceworker for maximum mobile browser isolation support
+          curl -s -L -o coi-serviceworker.min.js https://raw.githubusercontent.com/gzuidhof/coi-serviceworker/master/coi-serviceworker.min.js || true
+          if [ -f coi-serviceworker.min.js ]; then
+            sed -i 's/<head>/<head><script src="coi-serviceworker.min.js"><\/script>/' index.html
+          fi
+          ls -la
+
+      - name: Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: block_rush_game/build/web
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

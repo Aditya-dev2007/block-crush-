@@ -25,9 +25,12 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Accept Android SDK Licenses
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Install Android Platforms and Build-Tools
         run: |
-          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
+          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "cmdline-tools;latest"
 
       - name: Install Godot 4.7
         run: |
@@ -50,12 +53,12 @@ jobs:
           fi
           mkdir -p ~/.local/share/godot/templates
           cp -r ~/.local/share/godot/export_templates/4.7.stable ~/.local/share/godot/templates/4.7.stable
-          ls -la ~/.local/share/godot/export_templates/4.7.stable/
 
       - name: Generate Debug Keystore
         run: |
-          keytool -keyalg RSA -genkeypair -alias androiddebugkey -keypass android -keystore "$HOME/debug.keystore" -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999 -deststoretype pkcs12
-          ls -lh "$HOME/debug.keystore"
+          mkdir -p ~/.android
+          keytool -keyalg RSA -genkeypair -alias androiddebugkey -keypass android -keystore "$HOME/.android/debug.keystore" -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999 -deststoretype pkcs12
+          ls -lh "$HOME/.android/debug.keystore"
 
       - name: Configure Godot Editor Settings
         run: |
@@ -71,7 +74,7 @@ jobs:
               '[resource]',
               f'export/android/android_sdk_path = \"{sdk}\"',
               f'export/android/java_sdk_path = \"{java}\"',
-              f'export/android/debug_keystore = \"{home}/debug.keystore\"',
+              f'export/android/debug_keystore = \"{home}/.android/debug.keystore\"',
               'export/android/debug_keystore_pass = \"android\"',
               'export/android/force_system_user = false',
           ]
@@ -134,6 +137,11 @@ jobs:
 
             ## 📥 Direct APK Download:
             👉 **[Download BLOCK_RUSH.apk](https://github.com/${{ github.repository }}/releases/download/v1.0.0/BLOCK_RUSH.apk)**
+
+            ---
+
+            ## 🌐 Play Online on Mobile Browser (No install needed!):
+            👉 **[Play BLOCK RUSH in Browser](https://aditya-dev2007.github.io/block-crush-/)**
 
             ---
 

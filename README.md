@@ -1,31 +1,34 @@
 # 🧱 BLOCK RUSH (block-crush-)
 
-[![Android APK Build & Release](https://github.com/Aditya-dev2007/block-crush-/actions/workflows/export-apk.yml/badge.svg)](https://github.com/Aditya-dev2007/block-crush-/actions/workflows/export-apk.yml)
-[![Latest Release](https://img.shields.io/github/v/release/Aditya-dev2007/block-crush-?color=brightgreen&label=Release)](https://github.com/Aditya-dev2007/block-crush-/releases)
-
-A modern, highly addictive 8×8 block puzzle game built with **Godot 4**. Features dynamic combo chains, rich harmonic sound synthesis, daily seeded challenges with streak tracking, and tactile responsive controls.
+[![Play Online](https://img.shields.io/badge/Play_Now-Mobile_Web-success?style=for-the-badge&logo=googlechrome)](https://aditya-dev2007.github.io/block-crush-/)
+[![Download APK](https://img.shields.io/badge/Download-Android_APK-blue?style=for-the-badge&logo=android)](https://github.com/Aditya-dev2007/block-crush-/releases/download/v1.0.0/BLOCK_RUSH.apk)
 
 ---
 
-## 📱 How to Download & Play on Android
+## 📱 Scan & Play Instantly on Mobile
 
-### Option 1: Direct Download (Easiest & Recommended)
-1. **Open on Phone**: Open **[Latest GitHub Releases](https://github.com/Aditya-dev2007/block-crush-/releases)** in your Android browser.
-2. **Download**: Tap **`BLOCK_RUSH.apk`** under the latest release assets.
-3. **Install**:
-   - Open your notification tray or **Files / Downloads** folder and tap `BLOCK_RUSH.apk`.
-   - If prompted *"For your security, your phone is not allowed to install unknown apps from this source"*, tap **Settings** → enable **"Allow from this source"** → tap Back.
-   - Tap **Install**, then **Open** to play!
+Point your phone camera (Google Lens, iPhone Camera, or QR Scanner) at the code below to open and play the game immediately:
+
+<p align="center">
+  <a href="https://aditya-dev2007.github.io/block-crush-/">
+    <img src="qr_code.png" width="280" alt="Scan to Play BLOCK RUSH" />
+  </a>
+  <br/>
+  <b>👉 <a href="https://aditya-dev2007.github.io/block-crush-/">https://aditya-dev2007.github.io/block-crush-/</a></b>
+</p>
+
+> [!TIP]
+> **Install as PWA App**: When playing in Chrome or Safari on your phone, tap the browser menu (⋮ or Share) and select **"Add to Home Screen"** / **"Install App"**. BLOCK RUSH will install as a native fullscreen app with zero browser bars!
 
 ---
 
-### Option 2: Export Locally using Godot Editor
-If you prefer building the APK yourself on your computer:
-1. Open Godot 4 (4.4 or 4.7) and open the project at `block_rush_game/project.godot`.
-2. Go to **Editor → Manage Export Templates** and ensure Godot export templates are downloaded.
-3. Ensure **OpenJDK 17** and **Android SDK** are configured under **Editor → Editor Settings → Export → Android**.
-4. Go to **Project → Export**, select the **Android** preset, and click **Export Project...**.
-5. Save the APK file and transfer it to your phone.
+## 📥 Direct Android APK Download
+
+If you prefer installing the native Android app file:
+1. **Download APK**: [**Download BLOCK_RUSH.apk (v1.0.0)**](https://github.com/Aditya-dev2007/block-crush-/releases/download/v1.0.0/BLOCK_RUSH.apk)
+2. Tap the downloaded file on your phone.
+3. If prompted *"Allow installation from unknown sources"*, tap **Settings** → toggle **ON** → tap **Install**.
+4. Enjoy!
 
 ---
 
@@ -54,6 +57,8 @@ If you prefer building the APK yourself on your computer:
 ---
 
 ## 💻 Tech Stack
-- **Engine**: Godot Engine 4 (Compatibility renderer for universal Android hardware support)
+- **Engine**: Godot Engine 4 (Compatibility / Mobile renderer)
 - **Language**: GDScript 2.0
-- **CI/CD**: GitHub Actions automated headless Android APK build & GitHub Releases deployment
+- **Deployment**:
+  - **Mobile Web / PWA**: Hosted on **GitHub Pages**
+  - **Android APK**: Automated **GitHub Actions** CI/CD releases
